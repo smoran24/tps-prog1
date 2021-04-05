@@ -10,15 +10,15 @@ Algoritmo bomba_para_maquina
 	Leer tipoBomba
 	//Instrucciones de salida:
 	Segun tipoBomba Hacer
-	0:
+	Caso 0:
 		Escribir "No hay establecido un valor definido para el tipo de bomba"
-	1:
+	Caso 1:
 		Escribir "La bomba es una bomba de agua"
-	2:
+	Caso 2:
 		Escribir "La bomba es una bomba de gasolina"
-	3:
+	Caso 3:
 		Escribir "La bomba es una bomba de hormigón"
-	4:
+	Caso 4:
 		Escribir "La bomba es una bomba de pasta alimenticia"
 	De Otro Modo:
 		Escribir "No existe un valor válido para tipo de bomba"
