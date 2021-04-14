@@ -7,15 +7,18 @@ Algoritmo calcula100
 		Escribir "[1] Calcular usando estructura PARA"
 		Escribir "[2] Calcular usando estructura MIENTRAS"
 		Escribir "[3] Calcular usando estructura REPETIR"
+		Escribir "[Otro num.] Salir"
 		Leer eleccion
 		Segun eleccion Hacer
 			Caso 1:
+				Escribir "Escogió la opción 1"
 				Para num<-1 Hasta 100 Con Paso 1 Hacer
 					suma=num+suma
 					Escribir suma
 				Fin Para
 				Escribir "La suma es: ", suma
 			Caso 2:
+				Escribir "Escogió la opción 2"
 				num=1
 				Mientras suma<5050 Hacer
 					suma=num+suma
@@ -24,6 +27,7 @@ Algoritmo calcula100
 				Fin Mientras
 				Escribir "La suma es: ", suma
 			Caso 3:
+				Escribir "Escogió la opción 3"
 				num=1
 				Repetir
 					suma=num+suma
