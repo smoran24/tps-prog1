@@ -1,5 +1,5 @@
 Algoritmo calculadora
-	Definir num1, num2, suma, resta, producto, cociente Como Real
+	Definir num1, num2, suma, resta, producto, cociente, potencia Como Real
 	Definir i, eleccion, confirmacion Como Entero
 	Escribir "CALCULADORA V.1.1"
 	Para i<-1 hasta 2 con paso 1 Hacer
@@ -17,6 +17,7 @@ Algoritmo calculadora
 		Escribir "[2] Restarlos"
 		Escribir "[3] Multiplicarlos"
 		Escribir "[4] Dividirlos"
+		Escribir "[5] Potencia"
 		Escribir "[Otro Num.] Salir"
 		Leer eleccion
 		Segun eleccion hacer
@@ -41,6 +42,10 @@ Algoritmo calculadora
 				FinMientras
 				cociente=num1/num2
 				Escribir "RESULTADO: ", num1, "/", num2, "=", cociente
+			Caso 5:
+				Escribir "Escogió la opción 5"
+				potencia=num1^num2
+				Escribir "RESULTADO: ", num1, "^", num2, "=", potencia
 			De Otro Modo:
 				Escribir "¿Desea Salir?"
 				Escribir "[1] Sí"
