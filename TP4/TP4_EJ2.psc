@@ -2,7 +2,9 @@ Algoritmo busco_aleatorio_en_arreglo
 	//Autor: MORÁN, SEBASTIÁN
 	Definir numRandom, numRandomBuscador, posicion Como Entero
 	Definir existeNum Como Logico
-	Dimension nums[20]
+	Definir tamanioArray Como Entero
+	tamanioArray=20
+	Dimension nums[tamanioArray]
 	existeNum=Falso
 	posicion=0
 	Para i<-0 Hasta 19 Con Paso 1 Hacer //bucle que llena el arreglo de 20 elementos con numeros al azar
