@@ -8,6 +8,7 @@ Algoritmo Ta_Te_Ti
 	ganador="-"
 	Escribir "Bienvenido al juego de Ta Te Ti"
 	Escribir "Modo de juego: Jugador vs. COM"
+	Escribir "Cada jugador tiene 3 jugadas máximo"
 	Para j<-0 Hasta 2 Con Paso 1 Hacer //inicializa y muestra el tablero vacío. Se necesitan dos bucles para ir recorriendo filas y columnas del arreglo
 		Para i<-0 Hasta 2 Con Paso 1 Hacer
 			tablero[j,i]="-"
@@ -82,6 +83,12 @@ Algoritmo Ta_Te_Ti
 				ganador=tablero[1,0]
 			FinSi
 		Fin Para
+		Si (tablero[0,0]==tablero[1,1] y tablero[1,1]==tablero[2,2]) //verifico diagonal
+			ganador=tablero[0,0]
+		FinSi
+		Si (tablero[0,2]==tablero[1,1] y tablero[1,1]==tablero[2,0]) //verifico diagonal
+			ganador=tablero[0,2]
+		FinSi
 		Escribir ""
 		
 	FinMientras
