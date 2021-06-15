@@ -23,6 +23,7 @@ FinSubProceso
 
 SubProceso mostrarTablero(tablero por referencia, tamanioFila, tamanioColumna) //muestra tablero
 	Definir f, c como entero
+	Escribir "   (1) (2) (3) (4) (5)"
 	Para f<-0 hasta tamanioFila-1 con paso 1 hacer
 		Para c<-0 hasta tamanioColumna-1 con paso 1 hacer
 			Si (c==0) Entonces
@@ -46,6 +47,79 @@ SubProceso mostrarTablero(tablero por referencia, tamanioFila, tamanioColumna) /
 		FinPara
 		Escribir ""
 	FinPara
+FinSubProceso
+
+SubProceso pedirCoordenadasJ1(elecPos, tablero, jugadaFJ1 por referencia, jugadaCJ1 por referencia)
+	Definir jugadaLetra Como Caracter
+	Segun (elecPos)
+		Caso 1: //caso barco doble horizontal
+			Hacer
+				Escribir "[Ingrese coordenada Letra]"
+				Leer jugadaLetra
+				jugadaLetra=Mayusculas(jugadaLetra)
+			Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D" y jugadaLetra<>"E")
+			jugadaFJ1=convertirLetraANumero(jugadaLetra)
+			Hacer
+				Escribir "[Ingrese coordenada Num.]"
+				Leer jugadaCJ1
+			Mientras que (jugadaCJ1<1 o jugadaCJ1>4 o (tablero[jugadaFJ1, jugadaCJ1-1]=="2") o (tablero[jugadaFJ1, jugadaCJ1]=="2")) //evita que se vaya del tablero horizontalmente, tambien verifica que no pise otro barco doble
+		Caso 2: //caso barco doble vertical
+			Hacer
+				Escribir "[Ingrese coordenada Letra]"
+				Leer jugadaLetra
+				jugadaLetra=Mayusculas(jugadaLetra)
+			Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D") //evita que se vaya del tablero verticalmente
+			jugadaFJ1=convertirLetraANumero(jugadaLetra)
+			Hacer
+				Escribir "[Ingrese coordenada Num.]"
+				Leer jugadaCJ1
+			Mientras que (jugadaCJ1<1 o jugadaCJ1>5 o (tablero[jugadaFJ1, jugadaCJ1-1]=="2") o (tablero[jugadaFJ1+1, jugadaCJ1-1]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco doble
+		Caso 0: //caso barco simple
+			Hacer
+				Escribir "[Ingrese coordenada Letra]"
+				Leer jugadaLetra
+				jugadaLetra=Mayusculas(jugadaLetra)
+			Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D" y jugadaLetra<>"E")
+			jugadaFJ1=convertirLetraANumero(jugadaLetra)
+			Hacer
+				Escribir "[Ingrese coordenada Num.]"
+				Leer jugadaCJ1
+			Mientras que (jugadaCJ1<1 o jugadaCJ1>5 o (tablero[jugadaFJ1, jugadaCJ1-1]=="1") o (tablero[jugadaFJ1, jugadaCJ1-1]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco simple o doble
+		Caso 3: //caso misil
+			Hacer
+				Escribir "[Ingrese coordenada Letra]"
+				Leer jugadaLetra
+				jugadaLetra=Mayusculas(jugadaLetra)
+			Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D" y jugadaLetra<>"E")
+			jugadaFJ1=convertirLetraANumero(jugadaLetra)
+			Hacer
+				Escribir "[Ingrese coordenada Num.]"
+				Leer jugadaCJ1
+			Mientras que (jugadaCJ1<1 o jugadaCJ1>5)
+	FinSegun
+FinSubProceso
+
+SubProceso pedirCoordenadasCOM(elecPosCOM, tablero, jugadaFCOM por referencia, jugadaCCOM por referencia)
+	Segun (elecPosCOM)
+		Caso 1: //CASO BARCO DOBLE HORIZONTAL
+			Hacer
+				jugadaFCOM=Aleatorio(0,4)
+				jugadaCCOM=Aleatorio(0,3)
+			Mientras que ((tablero[jugadaFCOM, jugadaCCOM]=="2") o (tablero[jugadaFCOM, jugadaCCOM+1]=="2")) //verifica que no pise otro barco doble
+		Caso 2: //CASO BARCO DOBLE VERTICAL
+			Hacer
+				jugadaFCOM=Aleatorio(0,3)
+				jugadaCCOM=Aleatorio(0,4)
+			Mientras que ((tablero[jugadaFCOM, jugadaCCOM]=="2") o (tablero[jugadaFCOM+1, jugadaCCOM]=="2")) //verifica que no pise otro barco doble
+		Caso 0: //CASO BARCO SIMPLE
+			Hacer
+				jugadaFCOM=Aleatorio(0,4)
+				jugadaCCOM=Aleatorio(0,4)
+			Mientras que ((tablero[jugadaFCOM, jugadaCCOM]=="1") o (tablero[jugadaFCOM, jugadaCCOM]=="2")) //verifica que no pise otro barco simple o doble
+		Caso 3: //CASO MISIL
+			jugadaFCOM=Aleatorio(0,4)
+			jugadaCCOM=Aleatorio(0,4)
+	FinSegun
 FinSubProceso
 
 Funcion conversionI<-convertirLetraANumero(jugadaI) //convierte caracteres a enteros para la jugada por filas
@@ -124,7 +198,6 @@ Funcion ganador<-comprobarGanador(rondas, puntajeJ1 por referencia, puntajeCOM p
 	Finsi
 FinFuncion
 
-
 Algoritmo batallaNaval
 	Dimension tableroJ1[5, 5]
 	Dimension tableroAtaquesJ1[5, 5]
@@ -133,14 +206,13 @@ Algoritmo batallaNaval
 	Definir jugadaLetra Como Caracter
 	Definir nomJ1 Como Cadena
 	Definir eleccionMenu como entero
-	
 	iniciarTablero(tableroJ1, 5, 5)
 	iniciarTablero(tableroAtaquesJ1, 5, 5)
 	iniciarTablero(tableroCOM, 5, 5)
-	
 	Hacer
 		Escribir " "
 		Escribir "Bienvenido al juego de la Mini Batalla Naval"
+		Escribir "(Se recomienda jugar en pantalla completa)"
 		Hacer
 			Escribir "[1] JUGAR"
 			Escribir "[2] REGLAS"
@@ -156,6 +228,10 @@ Algoritmo batallaNaval
 				invocarGanador=0
 				puntosJ1=0
 				puntosCOM=0
+				jugadaFJ1=0
+				jugadaCJ1=0
+				jugadaFCOM=0
+				jugadaCCOM=0
 				Hacer //PROGRAMA PRINCIPAL QUE PIDE LAS JUGADAS DE AMBOS. DENTRO PEDIRÁ JUGADAS, MOSTRARÁ TABLEROS y COMPROBARÁ EL GANADOR
 					Escribir "[RONDA ", ronda, "]"
 					Si (ronda==1) Entonces //ronda de entrada para ubicar barcos
@@ -169,30 +245,7 @@ Algoritmo batallaNaval
 								Escribir "[2] Vertical"
 								Leer elecPos
 							Mientras Que (elecPos<1 o elecPos>2)
-							Segun (elecPos)
-								Caso 1: //CASO BARCO HORIZONTAL
-									Hacer
-										Escribir "[Ingrese coordenada Letra]"
-										Leer jugadaLetra
-										jugadaLetra=Mayusculas(jugadaLetra)
-									Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D" y jugadaLetra<>"E")
-									jugadaFJ1=convertirLetraANumero(jugadaLetra)
-									Hacer
-										Escribir "[Ingrese coordenada Num.]"
-										Leer jugadaCJ1
-									Mientras que (jugadaCJ1<1 o jugadaCJ1>4 o (tableroJ1[jugadaFJ1, jugadaCJ1-1]=="2") o (tableroJ1[jugadaFJ1, jugadaCJ1]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco
-								Caso 2: //CASO BARCO VERTICAL
-									Hacer
-										Escribir "[Ingrese coordenada Letra]"
-										Leer jugadaLetra
-										jugadaLetra=Mayusculas(jugadaLetra)
-									Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D")
-									jugadaFJ1=convertirLetraANumero(jugadaLetra)
-									Hacer
-										Escribir "[Ingrese coordenada Num.]"
-										Leer jugadaCJ1
-									Mientras que (jugadaCJ1<1 o jugadaCJ1>5 o (tableroJ1[jugadaFJ1, jugadaCJ1-1]=="2") o (tableroJ1[jugadaFJ1+1, jugadaCJ1-1]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco
-							FinSegun
+							pedirCoordenadasJ1(elecPos, tableroJ1, jugadaFJ1, jugadaCJ1)
 							jugada(tableroJ1, jugadaFJ1, jugadaCJ1-1, "2", elecPos)
 							Limpiar Pantalla
 							Escribir "[Turno del jugador: ", nomJ1, "]"
@@ -200,16 +253,7 @@ Algoritmo batallaNaval
 						FinPara
 						Para i<-0 hasta 3 hacer //ubica 4 barcos simples
 							Escribir "Ubique el Barco Simple nro. ", i+1, ":"
-							Hacer
-								Escribir "[Ingrese coordenada Letra]"
-								Leer jugadaLetra
-								jugadaLetra=Mayusculas(jugadaLetra)
-							Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D" y jugadaLetra<>"E")
-							jugadaFJ1=convertirLetraANumero(jugadaLetra)
-							Hacer
-								Escribir "[Ingrese coordenada Num.]"
-								Leer jugadaCJ1
-							Mientras que (jugadaCJ1<1 o jugadaCJ1>5 o (tableroJ1[jugadaFJ1, jugadaCJ1-1]=="1") o (tableroJ1[jugadaFJ1, jugadaCJ1-1]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco simple
+							pedirCoordenadasJ1(0, tableroJ1, jugadaFJ1, jugadaCJ1)
 							jugada(tableroJ1, jugadaFJ1, jugadaCJ1-1, "1", 0)
 							Limpiar Pantalla
 							Escribir "[Turno del jugador: ", nomJ1, "]"
@@ -217,30 +261,16 @@ Algoritmo batallaNaval
 						FinPara
 						Limpiar Pantalla
 						Escribir "[Turno del jugador COM]"
-						Escribir "Por favor espere..."
+						Escribir "Por favor espere mientras COM ubica sus barcos..."
 						Esperar 3 segundos
 						Limpiar Pantalla
 						Para i<-0 hasta 2 hacer //ubica 3 barcos dobles
 							elecPosCOM=Aleatorio(1,2)
-							Segun (elecPosCOM)
-								Caso 1: //CASO BARCO HORIZONTAL
-									Hacer
-										jugadaFCOM=Aleatorio(0,4)
-										jugadaCCOM=Aleatorio(0,3)
-									Mientras que ((tableroCOM[jugadaFCOM, jugadaCCOM]=="1") o (tableroCOM[jugadaFCOM, jugadaCCOM+1]=="1") o (tableroCOM[jugadaFCOM, jugadaCCOM]=="2") o (tableroCOM[jugadaFCOM, jugadaCCOM+1]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco
-								Caso 2: //CASO BARCO VERTICAL
-									Hacer
-										jugadaFCOM=Aleatorio(0,3)
-										jugadaCCOM=Aleatorio(0,4)
-									Mientras que ((tableroCOM[jugadaFCOM, jugadaCCOM]=="1") o (tableroCOM[jugadaFCOM+1, jugadaCCOM]=="1") o (tableroCOM[jugadaFCOM, jugadaCCOM]=="2") o (tableroCOM[jugadaFCOM+1, jugadaCCOM]=="2")) //evita que se vaya del tablero, tambien verifica que no pise otro barco
-							FinSegun
+							pedirCoordenadasCOM(elecPosCOM, tableroCOM, jugadaFCOM, jugadaCCOM)
 							jugada(tableroCOM, jugadaFCOM, jugadaCCOM, "2", elecPosCOM)
 						FinPara
 						Para i<-0 hasta 3 hacer //ubica 4 barcos simples
-							Hacer
-								jugadaFCOM=Aleatorio(0,4)
-								jugadaCCOM=Aleatorio(0,4)
-							Mientras que (tableroCOM[jugadaFCOM, jugadaCCOM]=="1") //evita que se vaya del tablero, tambien verifica que no pise otro barco simple
+							pedirCoordenadasCOM(0, tableroCOM, jugadaFCOM, jugadaCCOM)
 							jugada(tableroCOM, jugadaFCOM, jugadaCCOM, "1", 0)
 						FinPara
 					SiNo //rondas para atacar
@@ -254,25 +284,19 @@ Algoritmo batallaNaval
 						invocarGanador=comprobarGanador(ronda, puntosJ1, puntosCOM)
 						Escribir " "
 						Escribir "Momento de atacar a COM:"
-						Hacer
-							Escribir "[Ingrese coordenada Letra]"
-							Leer jugadaLetra
-							jugadaLetra=Mayusculas(jugadaLetra)
-						Mientras que (jugadaLetra<>"A" y jugadaLetra<>"B" y jugadaLetra<>"C" y jugadaLetra<>"D" y jugadaLetra<>"E")
-						jugadaFJ1=convertirLetraANumero(jugadaLetra)
-						Hacer
-							Escribir "[Ingrese coordenada Num.]"
-							Leer jugadaCJ1
-						Mientras que (jugadaCJ1<1 o jugadaCJ1>5)
-						jugada(tableroAtaquesJ1, jugadaFJ1, jugadaCJ1-1, "0", 0) //UBICARA EL 0 EN EL TABLERO ATAQUE DEL JUGADOR PARA QUE LO VEA J1
+						pedirCoordenadasJ1(3, tableroJ1, jugadaFJ1, jugadaCJ1) //EL PARAMETRO "3" ES PARA INDICARLE AL SUBPROCESO QUE ES UN MISIL
+						Si (tableroCOM[jugadaFJ1, jugadaCJ1-1]=="1" o tableroCOM[jugadaFJ1, jugadaCJ1-1]=="2") //marca con X o con O en el tablero de ataques del jugador para darle referencia
+							tableroAtaquesJ1[jugadaFJ1, jugadaCJ1-1]="X"
+						SiNo
+							tableroAtaquesJ1[jugadaFJ1, jugadaCJ1-1]="O"
+						Finsi
 						puntosJ1=obtenerPuntos(tableroCOM, jugadaFJ1, jugadaCJ1-1, puntosJ1)
-						jugada(tableroCOM, jugadaFJ1, jugadaCJ1-1, "0", 0) //UBICARA EL 0 EN EL TABLERO DE BARCOS DE COM
+						jugada(tableroCOM, jugadaFJ1, jugadaCJ1-1, "0", 3) //EL PARAMETRO "3" ES PARA INDICARLE AL SUBPROCESO QUE ES UN MISIL
 						Escribir "Presione una tecla para continuar..."
 						Esperar Tecla
 						Escribir " "
 						Escribir "[Turno del jugador COM]"
-						jugadaFCOM=Aleatorio(0,4) //genera un valor aleatorio para su elección de fila
-						jugadaCCOM=Aleatorio(0,4) //genera lo mismo pero para columnas
+						pedirCoordenadasCOM(3, tableroCOM, jugadaFCOM, jugadaCCOM)
 						Escribir "COM atacó en:"
 						Escribir ">Fila ", jugadaFCOM+1
 						Escribir ">Columna ", jugadaCCOM+1
@@ -281,24 +305,26 @@ Algoritmo batallaNaval
 						Escribir "Presione una tecla para continuar..."
 						Esperar Tecla
 						Limpiar Pantalla
-						jugada(tableroJ1, jugadaFCOM, jugadaCCOM, "0", 0) //UBICARA EL 0 EN EL TABLERO DE BARCOS DEL JUGADOR
+						jugada(tableroJ1, jugadaFCOM, jugadaCCOM, "0", 3) //EL PARAMETRO "3" ES PARA INDICARLE AL SUBPROCESO QUE ES UN MISIL
 					Finsi
 					ronda=ronda+1
 				Hasta Que (invocarGanador<>0 o ronda==21)
-				
 				Escribir "[JUEGO TERMINADO]"
 				Si (ronda==21) Entonces
 					Escribir "Se agotaron las rondas"
 				FinSi
 				Si (invocarGanador==1)
 					Escribir "El ganador fue: ", nomJ1
+					Escribir sin saltar "con ", puntosJ1, " puntos" 
 				SiNo
 					Si (invocarGanador==2) Entonces
 						Escribir "El ganador fue COM"
+						Escribir sin saltar "con ", puntosCOM, " puntos" 
 					SiNo
 						Escribir "Hubo un empate"
 					Finsi
 				Finsi
+				Escribir " "
 				iniciarTablero(tableroJ1, 5, 5)
 				iniciarTablero(tableroAtaquesJ1, 5, 5)
 				iniciarTablero(tableroCOM, 5, 5)
