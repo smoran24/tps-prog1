@@ -1,8 +1,8 @@
 //MORÁN, SEBASTIÁN
 //TP5_EJERCICIO2
-//Escribe un procedimiento que escriba en pantalla los n primeros números primos. El procedimiento recibe n como parámetro.
+//2. Escribe un procedimiento que escriba en pantalla los n primeros números primos. El procedimiento recibe n como parámetro.
 
-SubProceso mostrarNPrimos(N)
+SubProceso mostrarNPrimos(n)
 	Definir divisiones, auxNum, cuentaPrimos Como Entero
 	cuentaPrimos=0
 	auxNum=1
@@ -18,7 +18,7 @@ SubProceso mostrarNPrimos(N)
 			cuentaPrimos=cuentaPrimos+1
 		Finsi
 		auxNum=auxNum+1
-	Hasta Que(cuentaPrimos==N)
+	Hasta Que(cuentaPrimos==n)
 FinSubProceso
 
 Algoritmo N_Primeros_Primos
@@ -26,6 +26,6 @@ Algoritmo N_Primeros_Primos
 	Hacer
 		Escribir "Ingrese un número positivo N para contar los primeros N primos:"
 		Leer num
-	Mientras Que (num<2) //evita que sea 1 porque no es considerado primo
+	Mientras Que (num<1) //evita que sea negativo
 	mostrarNPrimos(num)
 FinAlgoritmo

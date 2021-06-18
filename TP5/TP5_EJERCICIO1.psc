@@ -3,7 +3,7 @@
 //1.	Crear un subprograma que reciba como entrada un valor entero e indique si se trata de un número par o impar. 
 //¿Qué tipo de subprograma crees más apropiado, procedimiento o función? Escribe también un programa principal para probar el subprograma.
 
-Funcion esPar<-determinarParidad(num)
+Funcion esPar<-determinarParidad(num) //Respuesta: Una función es la clase de subprograma más apropiada
 	Definir esPar como lógico
 	Si (num%2==0) Entonces
 		esPar=Verdadero
